@@ -15,14 +15,16 @@ namespace BazyExtension.App_Code
             int index = 1;
             List<Plugin> result = new List<Plugin>();
 
-            XDocument pluginsFile = XDocument.Load(Path.Combine(Environment.CurrentDirectory, "BazyExtension.xml"));
+            string pathname = AppDomain.CurrentDomain.BaseDirectory;
+
+            XDocument pluginsFile = XDocument.Load(Path.Combine(pathname, "BazyExtension.xml"));
             foreach (XElement item in pluginsFile.Descendants("Item").Where(x => x.Attribute("table").Value.ToUpper() == table.ToUpper()))
             {
                 string fileName = (item.Attribute("fileName") != null) ? item.Attribute("fileName").Value : string.Empty;
                 string name = (item.Attribute("pluginName") != null) ? item.Attribute("pluginName").Value : table;
 
                 string path = string.Empty;
-                foreach (string tempFileName in Directory.GetFiles(Environment.CurrentDirectory, $@"{fileName}"))
+                foreach (string tempFileName in Directory.GetFiles(pathname, $@"{fileName}"))
                 {
                     if (File.Exists(tempFileName))
                     {
@@ -30,8 +32,8 @@ namespace BazyExtension.App_Code
                         break;
                     }
                 }
-                if (string.IsNullOrEmpty(path) && (File.Exists(Path.Combine(Environment.CurrentDirectory, table))))
-                    path = Path.Combine(Environment.CurrentDirectory, fileName);
+                if (string.IsNullOrEmpty(path) && (File.Exists(Path.Combine(pathname, table))))
+                    path = Path.Combine(pathname, fileName);
 
 
                 if (!string.IsNullOrEmpty(path))
@@ -49,6 +51,7 @@ namespace BazyExtension.App_Code
                             plugin.Control.table = table;
                             plugin.Control.tabNo = tabNo;
                             plugin.Control.recNo = recNo;
+                            plugin.Control.Dock = System.Windows.Forms.DockStyle.Fill;
                             break;
                         }
                     }

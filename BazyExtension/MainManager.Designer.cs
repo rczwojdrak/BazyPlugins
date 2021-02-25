@@ -49,6 +49,7 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.PluginPanel, 0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -56,6 +57,7 @@
             // PluginPanel
             // 
             resources.ApplyResources(this.PluginPanel, "PluginPanel");
+            this.PluginPanel.BackColor = System.Drawing.SystemColors.Control;
             this.PluginPanel.Controls.Add(this.tabControl1);
             this.PluginPanel.Name = "PluginPanel";
             // 
@@ -69,6 +71,7 @@
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Name = "panel1";
             // 

@@ -26,7 +26,7 @@ namespace BazyExtension
         /// </para>
         /// </code>
         /// </example>
-        /// If you don't do this Bazy will not refresh UI.
+        /// If you don't do this Bazy will not refresh UI (reload context data in Bazy).
         /// </summary>
         public abstract event EventHandler DataChanged;
 

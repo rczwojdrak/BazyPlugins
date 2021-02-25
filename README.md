@@ -10,5 +10,5 @@ ExamplePlugin - this is an example plugin that is used by Plugin Manager from th
 Please notice that this solution is only a concept solution. You can find help here on how to write your own Bazy plugins or you can contribute to this project and provide your energy to make this peace of software better.
 
 Remarks:
-- Plugins in Bazy are available starting from WH OKNA version: 6.3.1.201.
-- WH OKNA in version 6.3.1.201 is compiled in .Net 4.6 so we strongly recommend to build plugins in this version of Microsoft Framework.
+- Plugins in Bazy are available starting from WH Okna version: 6.3.1.201.
+- WH Okna in version 6.3.1.201 is compiled in .Net 4.6 so we strongly recommend to build plugins in this version of Microsoft Framework.

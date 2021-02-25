@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Root>
-  <Item table="konstrwzd" pluginName="APIFittingsEditor" fileName="APIFittingsEditor.dll" />
+  <Item table="konstrwzd" pluginName="Example plugin" fileName="ExamplePlugin.dll" />
 </Root>
