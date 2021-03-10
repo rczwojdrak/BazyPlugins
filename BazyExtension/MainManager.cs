@@ -135,5 +135,10 @@ namespace BazyExtension
         {
             this.Text = $"{GlobaResource.Title} - {tabControl1.SelectedTab.Text}";
         }
+
+        private void MainManager_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
