@@ -60,11 +60,6 @@
     <Compile Include="App_Code\AbstractControlDescriptionProvider.cs" />
     <Compile Include="App_Code\PluginLoader.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="GlobaResource.pl-PL.Designer.cs">
-      <DependentUpon>GlobaResource.pl-PL.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="GlobaResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -101,15 +96,12 @@
     <Content Include="images\whbazy.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GlobaResource.pl-PL.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GlobaResource.pl-PL.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="GlobaResource.pl.resx" />
     <EmbeddedResource Include="GlobaResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobaResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainManager.pl-PL.resx">
+    <EmbeddedResource Include="MainManager.pl.resx">
       <DependentUpon>MainManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainManager.resx">

@@ -83,7 +83,6 @@
             this.MinimizeBox = false;
             this.Name = "MainManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainManager_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainManager_FormClosed);
             this.Load += new System.EventHandler(this.MainManager_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.PluginPanel.ResumeLayout(false);
