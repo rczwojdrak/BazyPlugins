@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 namespace BazyExtension
 {
@@ -42,18 +43,32 @@ namespace BazyExtension
             {
                 this.Close();
                 MessageBox.Show(ex.Message, $"{GlobaResource.Title} - {GlobaResource.ErrorCaption}", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; 
+                return;
             }
-
             if (plugins.Count > 1)
             {
+
                 tabControl1.Visible = true;
                 foreach (Plugin plugin in plugins)
                 {
                     TabPage tabPage = new TabPage($"{plugin.Index}. {plugin.Name}");
-                    tabPage.Controls.Add(plugin.Control);
+
+                    if (plugin.Control == null)
+                    {
+                        tabPage.Controls.Add(new ElementHost()
+                        {
+                            Child = plugin.ControlWPF,
+                            Dock = DockStyle.Fill
+                        });
+                    }
+                    else
+                    {
+                        tabPage.Controls.Add(plugin.Control);
+                    }
+
+                    //tabPage.Controls.Add(plugin.Control);
                     tabControl1.TabPages.Add(tabPage);
-                    plugin.Control.DataChanged += Control_DataChanged1;
+                    plugin.BaseControl.DataChanged += Control_DataChanged1;
                 }
                 this.Text = $"{GlobaResource.Title} - {tabControl1.SelectedTab.Text}";
             }
@@ -62,8 +77,22 @@ namespace BazyExtension
                 Plugin item = plugins[0];
                 this.Text = $"{GlobaResource.Title} - {item.Name}";
                 tabControl1.Visible = false;
-                PluginPanel.Controls.Add(item.Control);
-                item.Control.DataChanged += Control_DataChanged1;
+
+                if (item.Control == null)
+                {
+                    PluginPanel.Controls.Add(new ElementHost()
+                    {
+                        Child = item.ControlWPF,
+                        Dock = DockStyle.Fill
+                    });
+                }
+                else
+                {
+                    PluginPanel.Controls.Add(item.Control);
+                }
+
+
+                item.BaseControl.DataChanged += Control_DataChanged1;
             }
             else
             {

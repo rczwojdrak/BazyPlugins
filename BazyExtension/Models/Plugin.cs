@@ -22,7 +22,17 @@
 
         /// <summary>
         /// Plugin loaded from dll file by reflection mechanism.
+        /// User control from windows forms
         /// </summary>
         public PluginControl Control { get; set; }
+
+        /// <summary>
+        /// Plugin loaded from dll file by reflection mechanism.
+        /// User control from wpf
+        /// </summary>
+        public PluginControlWPF ControlWPF { get; set; }
+
+
+        public IPluginControl BaseControl => (Control == null ? ControlWPF as IPluginControl : Control as IPluginControl);
     }
 }
