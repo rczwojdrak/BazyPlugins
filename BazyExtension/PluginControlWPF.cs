@@ -1,16 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using BazyExtension.App_Code;
 
 namespace BazyExtension
 {
-
-    [TypeDescriptionProvider(typeof(AbstractControlDescriptionProvider<PluginControl, UserControl>))]
+    [TypeDescriptionProvider(typeof(AbstractControlDescriptionProvider<PluginControlWPF, UserControl>))]
     /// <summary>
     /// Main Bazy Plugin Manager class, each plugin need to inherit from this class.
     /// </summary>
-    public abstract class PluginControl : UserControl, IPluginControl
+    public abstract class PluginControlWPF : UserControl, IPluginControl
     {
         /// <summary>
         /// Call this method if you want to notify Bazy that data was changed in your plugin and Bazy need to refersh UI. Just call this method after you change data in Bazy plugin.<br/>

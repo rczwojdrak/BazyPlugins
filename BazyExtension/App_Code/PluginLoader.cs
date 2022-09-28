@@ -43,6 +43,16 @@ namespace BazyExtension.App_Code
                     Type[] types = library.GetTypes();
                     foreach (Type t in types)
                     {
+                        if (typeof(PluginControlWPF).IsAssignableFrom(t))
+                        {
+                            plugin.ControlWPF = (PluginControlWPF)Activator.CreateInstance(t);
+                            plugin.ControlWPF.OLEDBConnectionString = OLEDBConnectionString;
+                            plugin.ControlWPF.UILanguage = UILanguage;
+                            plugin.ControlWPF.table = table;
+                            plugin.ControlWPF.tabNo = tabNo;
+                            plugin.ControlWPF.recNo = recNo;
+                            break;
+                        }
                         if (typeof(PluginControl).IsAssignableFrom(t))
                         {
                             plugin.Control = (PluginControl)Activator.CreateInstance(t);
@@ -55,7 +65,7 @@ namespace BazyExtension.App_Code
                             break;
                         }
                     }
-                    if (plugin.Control != null)
+                    if (plugin.BaseControl != null)
                     {
                         plugin.Index = index;
                         plugin.Name = name;

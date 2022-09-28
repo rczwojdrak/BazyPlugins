@@ -39,8 +39,11 @@
     <ApplicationIcon>images\whbazy.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +58,8 @@
       <HintPath>..\..\..\..\whokna\UserExtContract.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\AbstractControlDescriptionProvider.cs" />
@@ -72,6 +77,8 @@
       <DependentUpon>MainManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Plugin.cs" />
+    <Compile Include="IPluginControl.cs" />
+    <Compile Include="PluginControlWPF.cs" />
     <Compile Include="PluginControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
