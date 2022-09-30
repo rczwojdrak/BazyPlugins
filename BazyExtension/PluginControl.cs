@@ -12,6 +12,34 @@ namespace BazyExtension
     /// </summary>
     public abstract class PluginControl : UserControl, IPluginControl
     {
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        protected PluginControl()
+        {
+        }
+
+        /// <summary>
+        /// Default constructor with parameters
+        /// </summary>
+        /// <param name="oLEDBConnectionString">Connection string</param>
+        /// <param name="uILanguage">Language od aplication</param>
+        /// <param name="table">Table of database</param>
+        /// <param name="tabNo">Table NO</param>
+        /// <param name="recNo"> RecNo</param>
+        protected PluginControl(string oLEDBConnectionString, string uILanguage, string table, int tabNo, int recNo)
+        {
+            OLEDBConnectionString = oLEDBConnectionString;
+            UILanguage = uILanguage;
+            this.table = table;
+            this.tabNo = tabNo;
+            this.recNo = recNo;
+        }
+
+        #endregion
+
         /// <summary>
         /// Call this method if you want to notify Bazy that data was changed in your plugin and Bazy need to refersh UI. Just call this method after you change data in Bazy plugin.<br/>
         /// For example:
@@ -29,6 +57,11 @@ namespace BazyExtension
         /// If you don't do this Bazy will not refresh UI (reload context data in Bazy).
         /// </summary>
         public abstract event EventHandler DataChanged;
+
+        /// <summary>
+        /// Set to action to invoke this on close plugin windows
+        /// </summary>
+        public event Action OnCloseMethod;
 
         /// <summary>
         /// Connection string provided by Bazy. This is OLE DB connection strong so to convert it to SQLClient Data Provider reference <c>Okna.Data.dll</c> to your plugin and using code in this example get new connection string.
@@ -66,5 +99,13 @@ namespace BazyExtension
         /// Each SQL table has unique row index. This index is from Bazy context.
         /// </summary>
         public abstract int recNo { set; }
+
+        /// <summary>
+        /// Methos to invoke all actions from event <see cref="OnCloseMethod"/>
+        /// </summary>
+        public void CloseActions()
+        {
+            OnCloseMethod?.Invoke();
+        }
     }
 }

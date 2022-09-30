@@ -11,6 +11,35 @@ namespace BazyExtension
     /// </summary>
     public abstract class PluginControlWPF : UserControl, IPluginControl
     {
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        protected PluginControlWPF()
+        {
+        }
+
+        /// <summary>
+        /// Default constructor with parameters
+        /// </summary>
+        /// <param name="oLEDBConnectionString">Connection string</param>
+        /// <param name="uILanguage">Language od aplication</param>
+        /// <param name="table">Table of database</param>
+        /// <param name="tabNo">Table NO</param>
+        /// <param name="recNo"> RecNo</param>
+        protected PluginControlWPF(string oLEDBConnectionString, string uILanguage, string table, int tabNo, int recNo)
+        {
+            OLEDBConnectionString = oLEDBConnectionString;
+            UILanguage = uILanguage;
+            this.table = table;
+            this.tabNo = tabNo;
+            this.recNo = recNo;
+        }
+
+        #endregion
+
+
         /// <summary>
         /// Call this method if you want to notify Bazy that data was changed in your plugin and Bazy need to refersh UI. Just call this method after you change data in Bazy plugin.<br/>
         /// For example:
@@ -29,6 +58,13 @@ namespace BazyExtension
         /// </summary>
         public abstract event EventHandler DataChanged;
 
+
+        /// <summary>
+        /// Set to action to invoke this on close plugin windows
+        /// </summary>
+        public event Action OnCloseMethod;
+
+
         /// <summary>
         /// Connection string provided by Bazy. This is OLE DB connection strong so to convert it to SQLClient Data Provider reference <c>Okna.Data.dll</c> to your plugin and using code in this example get new connection string.
         /// <code>
@@ -38,7 +74,7 @@ namespace BazyExtension
         /// </example>
         /// </code>
         /// </summary>
-        public abstract string OLEDBConnectionString { set; }
+        public abstract string OLEDBConnectionString { set; get; }
 
         /// <summary>
         /// UI language set in Bazy. You can localize your plugin using this variable.
@@ -46,7 +82,7 @@ namespace BazyExtension
         /// Example value: pl-PL
         /// </example>
         /// </summary>
-        public abstract string UILanguage { set; }
+        public abstract string UILanguage { set; get; }
 
         /// <summary>
         /// SQL Server table name. Each tab in Bazy can be releated with SQL table. This is table name from Bazy context.
@@ -54,16 +90,24 @@ namespace BazyExtension
         /// Example value: KONSTRWZD
         /// </example>
         /// </summary>
-        public abstract string table { set; }
+        public abstract string table { set; get; }
 
         /// <summary>
         /// In Bazy this is zero based tab index for selected item. You can determine if plugin can be run for this tab or not.
         /// </summary>
-        public abstract int tabNo { set; }
+        public abstract int tabNo { set; get; }
 
         /// <summary>
         /// Each SQL table has unique row index. This index is from Bazy context.
         /// </summary>
-        public abstract int recNo { set; }
+        public abstract int recNo { set; get; }
+
+        /// <summary>
+        /// Methos to invoke all actions from event <see cref="OnCloseMethod"/>
+        /// </summary>
+        public void CloseActions()
+        {
+            OnCloseMethod?.Invoke();
+        }
     }
 }
