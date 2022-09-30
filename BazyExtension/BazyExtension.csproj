@@ -77,7 +77,7 @@
       <DependentUpon>MainManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Plugin.cs" />
-    <Compile Include="IPluginControl.cs" />
+    <Compile Include="Models\IPluginControl.cs" />
     <Compile Include="PluginControlWPF.cs" />
     <Compile Include="PluginControl.cs">
       <SubType>UserControl</SubType>

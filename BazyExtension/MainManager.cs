@@ -15,6 +15,7 @@ namespace BazyExtension
         private string _table = string.Empty;
         private int _tabNo = -1;
         private int _recNo = -1;
+        private event Action onClosePluginsMethods;
 
         public MainManager(string OLEDBConnectionString, string UILanguage, string table, int tabNo, int recNo)
         {
@@ -53,22 +54,23 @@ namespace BazyExtension
                 {
                     TabPage tabPage = new TabPage($"{plugin.Index}. {plugin.Name}");
 
-                    if (plugin.Control == null)
+                    if (plugin.Control is PluginControlWPF wpf)
                     {
                         tabPage.Controls.Add(new ElementHost()
                         {
-                            Child = plugin.ControlWPF,
+                            Child = wpf,
                             Dock = DockStyle.Fill
                         });
                     }
-                    else
+                    else if(plugin.Control is PluginControl wf)
                     {
-                        tabPage.Controls.Add(plugin.Control);
+                        tabPage.Controls.Add(wf);
                     }
 
                     //tabPage.Controls.Add(plugin.Control);
                     tabControl1.TabPages.Add(tabPage);
-                    plugin.BaseControl.DataChanged += Control_DataChanged1;
+                    plugin.Control.DataChanged += Control_DataChanged1;
+                    onClosePluginsMethods += plugin.Control.CloseActions;
                 }
                 this.Text = $"{GlobaResource.Title} - {tabControl1.SelectedTab.Text}";
             }
@@ -78,21 +80,21 @@ namespace BazyExtension
                 this.Text = $"{GlobaResource.Title} - {item.Name}";
                 tabControl1.Visible = false;
 
-                if (item.Control == null)
+                if (item.Control is PluginControlWPF wpf)
                 {
                     PluginPanel.Controls.Add(new ElementHost()
                     {
-                        Child = item.ControlWPF,
+                        Child = wpf,
                         Dock = DockStyle.Fill
                     });
                 }
-                else
+                else if(item.Control is PluginControl wf)
                 {
-                    PluginPanel.Controls.Add(item.Control);
+                    PluginPanel.Controls.Add(wf);
                 }
 
-
-                item.BaseControl.DataChanged += Control_DataChanged1;
+                item.Control.DataChanged += Control_DataChanged1;
+                onClosePluginsMethods += item.Control.CloseActions;
             }
             else
             {
@@ -135,6 +137,7 @@ namespace BazyExtension
 
         private void MainManager_FormClosing(object sender, FormClosingEventArgs e)
         {
+            onClosePluginsMethods?.Invoke();
             if (WindowState == FormWindowState.Maximized)
             {
                 Properties.Settings.Default.Location = RestoreBounds.Location;
