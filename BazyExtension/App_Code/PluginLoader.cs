@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
 
 namespace BazyExtension.App_Code
@@ -45,27 +46,44 @@ namespace BazyExtension.App_Code
                     {
                         if (typeof(PluginControlWPF).IsAssignableFrom(t))
                         {
-                            plugin.ControlWPF = (PluginControlWPF)Activator.CreateInstance(t);
-                            plugin.ControlWPF.OLEDBConnectionString = OLEDBConnectionString;
-                            plugin.ControlWPF.UILanguage = UILanguage;
-                            plugin.ControlWPF.table = table;
-                            plugin.ControlWPF.tabNo = tabNo;
-                            plugin.ControlWPF.recNo = recNo;
+                            try
+                            {
+                                ///If plucin contains params in constructor
+                                plugin.Control = (PluginControlWPF)Activator.CreateInstance(t, OLEDBConnectionString, UILanguage, table, tabNo, recNo);
+                            }catch
+                            {
+                                plugin.Control = (PluginControlWPF)Activator.CreateInstance(t);
+                                plugin.Control.OLEDBConnectionString = OLEDBConnectionString;
+                                plugin.Control.UILanguage = UILanguage;
+                                plugin.Control.table = table;
+                                plugin.Control.tabNo = tabNo;
+                                plugin.Control.recNo = recNo;
+                            }
                             break;
                         }
                         if (typeof(PluginControl).IsAssignableFrom(t))
                         {
-                            plugin.Control = (PluginControl)Activator.CreateInstance(t);
-                            plugin.Control.OLEDBConnectionString = OLEDBConnectionString;
-                            plugin.Control.UILanguage = UILanguage;
-                            plugin.Control.table = table;
-                            plugin.Control.tabNo = tabNo;
-                            plugin.Control.recNo = recNo;
-                            plugin.Control.Dock = System.Windows.Forms.DockStyle.Fill;
+                            try
+                            {
+                                ///If plucin contains params in constructor
+                                plugin.Control = (PluginControl)Activator.CreateInstance(t, OLEDBConnectionString, UILanguage, table, tabNo, recNo);
+                            }
+                            catch
+                            {
+                                plugin.Control = (PluginControl)Activator.CreateInstance(t);
+                                plugin.Control.OLEDBConnectionString = OLEDBConnectionString;
+                                plugin.Control.UILanguage = UILanguage;
+                                plugin.Control.table = table;
+                                plugin.Control.tabNo = tabNo;
+                                plugin.Control.recNo = recNo;
+                                (plugin.Control as PluginControl).Dock = System.Windows.Forms.DockStyle.Fill;
+                            }
+                            
                             break;
                         }
+                        
                     }
-                    if (plugin.BaseControl != null)
+                    if (plugin.Control != null)
                     {
                         plugin.Index = index;
                         plugin.Name = name;
@@ -74,6 +92,7 @@ namespace BazyExtension.App_Code
                         result.Add(plugin);
                         index++;
                     }
+
                 }
             }
             return result;
